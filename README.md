@@ -4,6 +4,9 @@
 
 본 프로젝트는 서울시 공공자전거(따릉이) 대여 이력 데이터와 기상 데이터를 결합하여 이용 패턴을 분석하고, 운영 효율화를 위한 데이터 기반의 인사이트를 제공하는 **Streamlit** 웹 대시보드입니다.
 
+## 🔗 사용 프롬프트
+https://yoonsol530bicycle-analysis-2026.streamlit.app/
+
 ## 🔗 배포 주소
 
 [서울시 따릉이 데이터 분석 대시보드 바로가기] https://yoonsol530bicycle-analysis-2026.streamlit.app/
