@@ -98,7 +98,6 @@ if not df2.empty:
     fig2.update_yaxes(title_text="<b>이용 시간</b> (Line)", secondary_y=True)
 
     st.plotly_chart(fig2, use_container_width=True)
-    
     st.info("""
     💡 **데이터 인사이트**
     - 평균 기온 15°C~25°C 사이의 온화한 날씨에서 이용 건수와 시간이 동반 상승하는 '골디락스' 구간이 확인됨. 
