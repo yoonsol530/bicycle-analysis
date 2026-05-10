@@ -70,7 +70,7 @@ if not df1.empty:
 
 st.markdown("---")
 
---- 차트 2: 기온에 따른 이용건수와 시간의 상관관계 ---
+# --- 차트 2: 기온에 따른 이용건수와 시간의 상관관계 ---
 st.subheader("2. 기온별 이용 효율 (골디락스 구간 찾기)")
 q2 = """
 SELECT T.평균기온, SUM(I.이용건수) as 총이용건수, AVG(I.이용시간) as 평균이용시간
@@ -98,6 +98,7 @@ if not df2.empty:
     fig2.update_yaxes(title_text="<b>이용 시간</b> (Line)", secondary_y=True)
 
     st.plotly_chart(fig2, use_container_width=True)
+    
     st.info("""
     💡 **데이터 인사이트**
     - 평균 기온 15°C~25°C 사이의 온화한 날씨에서 이용 건수와 시간이 동반 상승하는 '골디락스' 구간이 확인됨. 
