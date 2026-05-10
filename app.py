@@ -70,8 +70,10 @@ if not df1.empty:
 
 st.markdown("---")
 
-# --- 차트 2: 기온별 이용 효율 분석 ---
+ # --- 차트 2: 기온별 이용 효율 분석 (이중 축 + 막대 두께 최적화) ---
 st.header("🌡️ 2. 기온별 이용 효율 분석")
+
+# 1도 단위로 세밀하게 분석하여 막대가 너무 두꺼워지는 것을 방지함
 q2 = """
 SELECT CAST(T.평균기온 AS INTEGER) as 기온구간, 
        SUM(I.이용건수) as 총이용건수, 
@@ -85,10 +87,39 @@ df2 = load_data(q2)
 
 if not df2.empty:
     fig2 = make_subplots(specs=[[{"secondary_y": True}]])
-    fig2.add_trace(go.Bar(x=df2['기온구간'], y=df2['총이용건수'], name="이용 건수", marker_color='rgba(31, 119, 180, 0.5)'), secondary_y=False)
-    fig2.add_trace(go.Scatter(x=df2['기온구간'], y=df2['평균이용시간'], name="이용 시간(분)", line=dict(color='crimson', width=3)), secondary_y=True)
 
-    fig2.update_layout(title="기온 변화에 따른 이용량 및 이용시간 트렌드", xaxis_title="평균 기온 (℃)")
+    # 이용건수 막대 (두께 조절을 위해 개별 기온 단위를 사용함)
+    fig2.add_trace(
+        go.Bar(
+            x=df2['기온구간'], 
+            y=df2['총이용건수'], 
+            name="이용 건수", 
+            marker_color='rgba(31, 119, 180, 0.5)',
+            offsetgroup=1
+        ),
+        secondary_y=False,
+    )
+
+    # 이용시간 선 그래프
+    fig2.add_trace(
+        go.Scatter(
+            x=df2['기온구간'], 
+            y=df2['평균이용시간'], 
+            name="이용 시간(분)", 
+            line=dict(color='crimson', width=3)
+        ),
+        secondary_y=True,
+    )
+
+    fig2.update_layout(
+        title="기온 변화에 따른 이용량 및 이용시간 트렌드", 
+        xaxis_title="평균 기온 (℃)",
+        bargap=0.3 # 막대 사이의 간격을 조절하여 두께를 적정하게 유지함
+    )
+    
+    fig2.update_yaxes(title_text="이용 건수", secondary_y=False)
+    fig2.update_yaxes(title_text="이용 시간 (분)", secondary_y=True)
+
     st.plotly_chart(fig2, use_container_width=True)
     
     st.info("""
